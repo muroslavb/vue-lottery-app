@@ -2,7 +2,13 @@
 withDefaults(
   defineProps<{
     type?: 'button' | 'submit' | 'reset'
-    variant?: 'primary' | 'secondary' | 'danger' | 'outline-primary' | 'outline-danger'
+    variant?:
+      | 'primary'
+      | 'secondary'
+      | 'danger'
+      | 'outline-primary'
+      | 'outline-secondary'
+      | 'outline-danger'
     size?: 'sm'
     disabled?: boolean
   }>(),

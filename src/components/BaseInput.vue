@@ -1,16 +1,15 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    modelValue: string
+    modelValue: string | undefined
     id: string
     label: string
-    type?: 'text' | 'email' | 'date' | 'tel'
+    type?: 'text' | 'email' | 'tel' | 'password' | 'number'
     placeholder?: string
+    autocomplete?: string
     error?: string
-    isValid?: boolean
-    max?: string
   }>(),
-  { type: 'text', placeholder: '', error: '', isValid: false, max: undefined },
+  { type: 'text', placeholder: '', autocomplete: undefined, error: '' },
 )
 
 const emit = defineEmits<{
@@ -31,9 +30,9 @@ function onInput(event: Event): void {
       :value="modelValue"
       :type="type"
       :placeholder="placeholder"
-      :max="max"
+      :autocomplete="autocomplete"
       class="form-control"
-      :class="{ 'is-invalid': error, 'is-valid': isValid }"
+      :class="{ 'is-invalid': error }"
       @input="onInput"
       @blur="emit('blur')"
     />

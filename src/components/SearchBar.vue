@@ -1,19 +1,41 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { SEARCH_DEBOUNCE_MS } from '../constants'
+import { SEARCH_DEBOUNCE_MS } from '@/constants'
+
+const props = withDefaults(
+  defineProps<{
+    modelValue: string
+    placeholder?: string
+  }>(),
+  { placeholder: 'Search by name' },
+)
 
 const emit = defineEmits<{
-  'filter-by-name': [name: string]
+  'update:modelValue': [value: string]
 }>()
 
-const query = ref('')
+const query = ref(props.modelValue)
 let timerId: ReturnType<typeof setTimeout> | undefined
 
-// debounce: подія відправляється, лише коли користувач 300 мс не змінював запит
+// debounce: батьківський компонент отримує новий запит, лише коли користувач 300 мс нічого не вводив
 watch(query, (value) => {
   clearTimeout(timerId)
-  timerId = setTimeout(() => emit('filter-by-name', value), SEARCH_DEBOUNCE_MS)
+  if (value === props.modelValue) {
+    return
+  }
+  timerId = setTimeout(() => emit('update:modelValue', value), SEARCH_DEBOUNCE_MS)
 })
+
+// значення змінили ззовні (наприклад, кнопка "Назад" змінила ?q= в URL)
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (value !== query.value) {
+      clearTimeout(timerId)
+      query.value = value
+    }
+  },
+)
 
 onBeforeUnmount(() => clearTimeout(timerId))
 </script>
@@ -23,7 +45,7 @@ onBeforeUnmount(() => clearTimeout(timerId))
     v-model="query"
     type="search"
     class="form-control"
-    placeholder="Search by name"
-    aria-label="Search participants by name"
+    :placeholder="placeholder"
+    aria-label="Search users"
   />
 </template>
