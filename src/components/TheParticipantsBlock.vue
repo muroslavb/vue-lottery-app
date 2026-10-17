@@ -59,8 +59,7 @@ function ariaSort(key: SortKey): 'ascending' | 'descending' | 'none' {
 
 <template>
   <section class="card app-card">
-    <SearchBar class="mb-3" @filter-by-name="nameFilter = $event" />
-    <div class="table-responsive">
+    <SearchBar v-model="nameFilter" class="mb-3" />    <div class="table-responsive">
       <table class="table align-middle mb-0">
         <thead>
           <tr>

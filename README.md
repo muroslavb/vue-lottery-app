@@ -1,19 +1,4 @@
-# vue-lottery-app
 
-Лабораторна №4-5: застосунок на Vue 3 (Composition API + TypeScript).
-Гілка `feature/routing` (ЛР5): vue-router, патерн Repository, авторизація JWT, Pinia, VeeValidate.
-
-## Запуск
-
-```bash
-npm install
-cp .env.example .env   # адреса API (VITE_API_URL)
-npm run dev            # http://localhost:5173
-npm run build          # перевірка типів (vue-tsc) + збірка + 404.html для gh-pages
-npm run lint           # ESLint (Vue style guide)
-npm run format         # Prettier
-npm run deploy         # збірка і публікація dist у гілку gh-pages
-```
 
 Тестовий акаунт для входу: `emilys` / `emilyspass` ([DummyJSON](https://dummyjson.com/docs)).
 

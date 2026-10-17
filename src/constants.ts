@@ -7,6 +7,12 @@ export const SEARCH_DEBOUNCE_MS = 300
 /** Ключ localStorage, під яким зберігається сесія (токени + користувач). */
 export const AUTH_STORAGE_KEY = 'vue-lottery-auth'
 
+/** Ключ localStorage для локального збереження учасників (якщо потрібно). */
+export const PARTICIPANTS_STORAGE_KEY = 'vue-lottery-participants'
+
+/** Максимальна кількість переможців у лотереї. */
+export const MAX_WINNERS = 3
+
 /** Термін життя accessToken у хвилинах (параметр expiresInMins у DummyJSON). */
 export const ACCESS_TOKEN_TTL_MINUTES = 30
 
