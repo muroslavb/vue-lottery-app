@@ -1,6 +1,9 @@
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
-/** Підключення Pinia (стани застосунку живуть у store-ах шарів entities / features). */
+/** Підключення Pinia + плагін збереження стану (store з опцією persist пишуть у localStorage). */
 export function setupPinia() {
-  return createPinia()
+  const pinia = createPinia()
+  pinia.use(piniaPluginPersistedstate)
+  return pinia
 }

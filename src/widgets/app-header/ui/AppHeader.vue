@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ThemeSwitcher } from '@/features/theme-switcher'
 import AppLogo from './AppLogo.vue'
 import AppNavigation from './AppNavigation.vue'
 </script>
@@ -7,7 +8,10 @@ import AppNavigation from './AppNavigation.vue'
   <header class="app-header">
     <div class="app-container app-header__inner">
       <AppLogo />
-      <AppNavigation />
+      <div class="app-header__right">
+        <AppNavigation />
+        <ThemeSwitcher />
+      </div>
     </div>
   </header>
 </template>
@@ -16,6 +20,12 @@ import AppNavigation from './AppNavigation.vue'
 .app-header {
   border-bottom: 1px solid var(--p-content-border-color);
   background-color: var(--p-content-background);
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
   &__inner {
     display: flex;

@@ -6,6 +6,7 @@ import { setupPinia } from '@/app/providers/pinia'
 import { setupUi } from '@/app/providers/ui'
 import router from '@/app/providers/router/index'
 import { registerServices } from '@/app/providers/services'
+import { setupTheme } from '@/app/providers/theme'
 import { useSessionStore } from '@/entities/session/model/session.store'
 
 registerServices()
@@ -13,6 +14,7 @@ registerServices()
 const app = createApp(App)
 app.use(setupPinia())
 setupUi(app)
+setupTheme()
 setupAuthBridge(router)
 app.use(router)
 app.mount('#app')
