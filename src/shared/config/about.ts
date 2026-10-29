@@ -1,9 +1,8 @@
-// TODO: підставте свої дані перед здачею (ПІБ, посилання на GitHub, навички).
 export const PROJECT_GITHUB_URL = 'https://github.com/muroslavb/vue-lottery-app.git'
 
 export const AUTHOR = {
   fullName: 'Бельмега М. І.',
-  githubUrl: 'https://github.com/YOUR_GITHUB_USERNAME',
+  githubUrl: 'https://github.com/muroslavb',
   university: 'Чернівецький національний університет імені Юрія Федьковича',
   department: 'Кафедра програмного забезпечення комп’ютерних систем',
   skills: [
