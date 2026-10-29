@@ -8,4 +8,4 @@ export type {
 } from './model/types'
 export type { AuthRepository } from './api/auth.repository'
 export { AuthService } from './api/auth.service'
-export { useAuthStore } from './model/auth.store'
+export { useSessionStore } from './model/session.store'

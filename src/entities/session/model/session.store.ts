@@ -3,22 +3,27 @@ import { computed, ref, watch } from 'vue'
 import { HttpError } from '@/shared/api/http-client'
 import { ServiceProvider } from '@/shared/api/service-provider'
 import type { AuthService } from '../api/auth.service'
-import type { AuthUser, LoginCredentials } from './types'
-import { clearSession, loadSession, saveSession } from '../lib/auth-storage'
+import type { AuthSession, AuthTokens, AuthUser, LoginCredentials } from './types'
+import { clearSession as removeStoredSession, loadSession, saveSession } from '../lib/auth-storage'
 import { getErrorMessage } from '@/shared/lib/errors'
 
-export const useAuthStore = defineStore('auth', () => {
+/**
+ * Store сесії (setup store): токени, поточний користувач, ознака авторизації.
+ * Синхронізація з localStorage реалізована вручну (watch) - порівняння з
+ * pinia-plugin-persistedstate див. у README.
+ */
+export const useSessionStore = defineStore('session', () => {
   const service = () => ServiceProvider.get<AuthService>('auth')
 
-  // відновлення сесії з localStorage при завантаженні застосунку
+  // state: відновлення сесії з localStorage при завантаженні застосунку
   const saved = loadSession()
   const user = ref<AuthUser | null>(saved?.user ?? null)
   const accessToken = ref<string | null>(saved?.accessToken ?? null)
   const refreshToken = ref<string | null>(saved?.refreshToken ?? null)
-
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
+  // getters
   const isAuthenticated = computed(() => accessToken.value !== null)
 
   // збереження в localStorage - watcher з опцією deep
@@ -32,11 +37,30 @@ export const useAuthStore = defineStore('auth', () => {
           refreshToken: refreshToken.value,
         })
       } else {
-        clearSession()
+        removeStoredSession()
       }
     },
     { deep: true },
   )
+
+  // actions
+  function setSession(session: AuthSession): void {
+    user.value = session.user
+    accessToken.value = session.accessToken
+    refreshToken.value = session.refreshToken
+  }
+
+  function setTokens(tokens: AuthTokens): void {
+    accessToken.value = tokens.accessToken
+    refreshToken.value = tokens.refreshToken
+  }
+
+  function clearSession(): void {
+    user.value = null
+    accessToken.value = null
+    refreshToken.value = null
+    error.value = null
+  }
 
   /** Повертає true при успішному логіні; текст помилки лежить у error. */
   async function login(credentials: LoginCredentials): Promise<boolean> {
@@ -48,9 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
         refreshToken: refresh,
         ...profile
       } = await service().login(credentials)
-      user.value = profile
-      accessToken.value = access
-      refreshToken.value = refresh
+      setSession({ user: profile, accessToken: access, refreshToken: refresh })
       return true
     } catch (e) {
       error.value = getErrorMessage(e)
@@ -61,21 +83,16 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function logout(): void {
-    user.value = null
-    accessToken.value = null
-    refreshToken.value = null
-    error.value = null
+    clearSession()
   }
 
-  /** Оновлює пару токенів через POST /auth/refresh. Використовується interceptor-ом HTTP-клієнта. */
+  /** Оновлює пару токенів через POST /auth/refresh. Викликається interceptor-ом HTTP-клієнта. */
   async function refreshSession(): Promise<boolean> {
     if (!refreshToken.value) {
       return false
     }
     try {
-      const tokens = await service().refresh(refreshToken.value)
-      accessToken.value = tokens.accessToken
-      refreshToken.value = tokens.refreshToken
+      setTokens(await service().refresh(refreshToken.value))
       return true
     } catch {
       return false
@@ -98,7 +115,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (e) {
       // 401 після невдалого refresh обробляє interceptor; мережеві помилки сесію не скидають
       if (e instanceof HttpError && e.status === 401) {
-        logout()
+        clearSession()
       }
     }
   }
@@ -110,6 +127,8 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading,
     error,
     isAuthenticated,
+    setSession,
+    clearSession,
     login,
     logout,
     refreshSession,

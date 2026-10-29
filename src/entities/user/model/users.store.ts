@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { PAGE_SIZE } from '@/shared/config/constants'
 import { ServiceProvider } from '@/shared/api/service-provider'
 import type { UserService } from '../api/user.service'
@@ -20,6 +20,8 @@ export const useUsersStore = defineStore('users', () => {
   const currentUser = ref<User | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+
+  const hasUsers = computed(() => users.value.length > 0)
 
   const createdUsers = ref<User[]>([])
   const updatedUsers = ref<Record<number, User>>({})
@@ -144,7 +146,7 @@ export const useUsersStore = defineStore('users', () => {
     return updated
   }
 
-  async function deleteUser(id: number): Promise<void> {
+  async function removeUser(id: number): Promise<void> {
     if (isLocalUser(id)) {
       createdUsers.value = createdUsers.value.filter((user) => user.id !== id)
     } else {
@@ -165,12 +167,13 @@ export const useUsersStore = defineStore('users', () => {
     users,
     total,
     currentUser,
+    hasUsers,
     isLoading,
     error,
     fetchUsers,
     fetchUser,
     createUser,
     updateUser,
-    deleteUser,
+    removeUser,
   }
 })

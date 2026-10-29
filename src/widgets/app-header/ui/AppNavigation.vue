@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/entities/session/model/auth.store'
+import { useSessionStore } from '@/entities/session/model/session.store'
 import BaseButton from '@/shared/ui/BaseButton.vue'
 
-const auth = useAuthStore()
+const auth = useSessionStore()
 const router = useRouter()
 
 async function logout(): Promise<void> {

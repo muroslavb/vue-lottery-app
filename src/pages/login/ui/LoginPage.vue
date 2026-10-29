@@ -7,10 +7,10 @@ import BaseAlert from '@/shared/ui/BaseAlert.vue'
 import BaseButton from '@/shared/ui/BaseButton.vue'
 import BaseInput from '@/shared/ui/BaseInput.vue'
 import { loginSchema } from '@/features/auth/model/login.schema'
-import { useAuthStore } from '@/entities/session/model/auth.store'
+import { useSessionStore } from '@/entities/session/model/session.store'
 import { getSafeRedirect } from '@/shared/lib/redirect'
 
-const auth = useAuthStore()
+const auth = useSessionStore()
 const route = useRoute()
 const router = useRouter()
 const uid = useId()
