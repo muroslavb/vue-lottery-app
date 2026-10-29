@@ -1,2 +1,3 @@
 // Public API слайса features/auth
-export { loginSchema } from './model/login.schema'
+export { default as LoginForm } from './ui/LoginForm.vue'
+export { default as LogoutButton } from './ui/LogoutButton.vue'

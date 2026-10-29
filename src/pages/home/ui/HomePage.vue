@@ -1,32 +1,55 @@
 <script setup lang="ts">
-import { PROJECT_GITHUB_URL, TECHNOLOGIES } from '@/shared/config/about'
+import { AppButton, AppCard } from '@/shared/ui'
+import { PROJECT_GITHUB_URL, TECHNOLOGIES } from '@/shared/config'
 </script>
 
 <template>
-  <section class="card app-card">
-    <h1 class="app-card__title">Vue Lottery</h1>
-    <p class="text-body-secondary">
+  <AppCard title="Vue Lottery">
+    <p class="home-page__lead">
       Навчальний застосунок на Vue 3: каталог користувачів із пагінацією та пошуком, перегляд і
       редагування профілю, створення та видалення користувачів, авторизація за JWT.
     </p>
 
-    <h2 class="h6 fw-bold mt-3">Technologies</h2>
-    <ul class="mb-3">
+    <h2 class="home-page__subtitle">Technologies</h2>
+    <ul class="home-page__list">
       <li v-for="technology in TECHNOLOGIES" :key="technology.name">
         <strong>{{ technology.name }}</strong> - {{ technology.note }}
       </li>
     </ul>
 
-    <div class="d-flex flex-wrap gap-2">
-      <a
-        class="btn btn-outline-primary"
+    <div class="home-page__actions">
+      <AppButton
+        label="Project on GitHub"
+        icon="pi pi-github"
+        outlined
         :href="PROJECT_GITHUB_URL"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <i class="bi bi-github" aria-hidden="true" /> Project on GitHub
-      </a>
-      <RouterLink class="btn btn-primary" :to="{ name: 'users' }">Open users</RouterLink>
+      />
+      <AppButton label="Open users" :to="{ name: 'users' }" />
     </div>
-  </section>
+  </AppCard>
 </template>
+
+<style scoped lang="scss">
+.home-page {
+  &__lead {
+    margin-top: 0;
+    color: var(--p-text-muted-color);
+  }
+
+  &__subtitle {
+    margin: 1rem 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  &__list {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+</style>

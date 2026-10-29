@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import '@/app/styles/main.scss'
 import App from '@/app/App.vue'
 import { setupAuthBridge } from '@/app/providers/auth-bridge'

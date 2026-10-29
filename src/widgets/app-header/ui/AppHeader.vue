@@ -5,9 +5,7 @@ import AppNavigation from './AppNavigation.vue'
 
 <template>
   <header class="app-header">
-    <div
-      class="container app-container d-flex flex-wrap align-items-center justify-content-between gap-2"
-    >
+    <div class="app-container app-header__inner">
       <AppLogo />
       <AppNavigation />
     </div>
@@ -16,8 +14,17 @@ import AppNavigation from './AppNavigation.vue'
 
 <style scoped lang="scss">
 .app-header {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #e8e8e8;
-  background-color: #fff;
+  border-bottom: 1px solid var(--p-content-border-color);
+  background-color: var(--p-content-background);
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 }
 </style>

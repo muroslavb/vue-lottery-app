@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import AppHeader from '@/widgets/app-header/ui/AppHeader.vue'
+import { AppHeader } from '@/widgets/app-header'
 </script>
 
 <template>
   <AppHeader />
-  <main class="container app-container app-main">
+  <main class="app-container app-main">
     <slot />
   </main>
 </template>

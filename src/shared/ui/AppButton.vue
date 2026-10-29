@@ -15,6 +15,8 @@ withDefaults(
     disabled?: boolean
     /** Якщо задано - кнопка рендериться як посилання vue-router. */
     to?: RouteLocationRaw
+    /** Зовнішнє посилання (відкривається в новій вкладці). */
+    href?: string
   }>(),
   {
     label: undefined,
@@ -27,6 +29,7 @@ withDefaults(
     loading: false,
     disabled: false,
     to: undefined,
+    href: undefined,
   },
 )
 
@@ -34,10 +37,10 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 </script>
 
 <template>
-  <RouterLink v-if="to" v-slot="{ href, navigate }" :to="to" custom>
+  <RouterLink v-if="to" v-slot="{ href: linkHref, navigate }" :to="to" custom>
     <Button
       as="a"
-      :href="href"
+      :href="linkHref"
       :label="label"
       :icon="icon"
       :severity="severity"
@@ -47,6 +50,19 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
       @click="navigate"
     />
   </RouterLink>
+  <Button
+    v-else-if="href"
+    as="a"
+    :href="href"
+    target="_blank"
+    rel="noopener noreferrer"
+    :label="label"
+    :icon="icon"
+    :severity="severity"
+    :outlined="outlined"
+    :text="text"
+    :size="size"
+  />
   <Button
     v-else
     :type="type"

@@ -1,29 +1,49 @@
 <script setup lang="ts">
-import { AUTHOR } from '@/shared/config/about'
+import { AppButton, AppCard, AppTag } from '@/shared/ui'
+import { AUTHOR } from '@/shared/config'
 </script>
 
 <template>
-  <section class="card app-card">
-    <h1 class="app-card__title">About author</h1>
-    <p class="fs-5 fw-semibold mt-2 mb-1">{{ AUTHOR.fullName }}</p>
-    <p class="text-body-secondary mb-3">{{ AUTHOR.university }}, {{ AUTHOR.department }}</p>
+  <AppCard title="About author">
+    <p class="about-page__name">{{ AUTHOR.fullName }}</p>
+    <p class="about-page__meta">{{ AUTHOR.university }}, {{ AUTHOR.department }}</p>
 
-    <h2 class="h6 fw-bold">Technical skills</h2>
-    <ul class="list-unstyled d-flex flex-wrap gap-2 mb-3">
+    <h2 class="about-page__subtitle">Technical skills</h2>
+    <ul class="about-page__skills">
       <li v-for="skill in AUTHOR.skills" :key="skill">
-        <span class="badge text-bg-primary">{{ skill }}</span>
+        <AppTag :value="skill" />
       </li>
     </ul>
 
-    <div>
-      <a
-        class="btn btn-outline-primary"
-        :href="AUTHOR.githubUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <i class="bi bi-github" aria-hidden="true" /> GitHub profile
-      </a>
-    </div>
-  </section>
+    <AppButton label="GitHub profile" icon="pi pi-github" outlined :href="AUTHOR.githubUrl" />
+  </AppCard>
 </template>
+
+<style scoped lang="scss">
+.about-page {
+  &__name {
+    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  &__meta {
+    margin: 0 0 1rem;
+    color: var(--p-text-muted-color);
+  }
+
+  &__subtitle {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  &__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+}
+</style>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import AppLogo from '@/widgets/app-header/ui/AppLogo.vue'
+import { AppLogo } from '@/widgets/app-header'
 </script>
 
 <template>
   <main class="auth-layout">
     <div class="auth-layout__box">
-      <div class="text-center mb-4">
+      <div class="auth-layout__logo">
         <AppLogo />
       </div>
       <slot />
@@ -20,10 +20,15 @@ import AppLogo from '@/widgets/app-header/ui/AppLogo.vue'
   align-items: center;
   justify-content: center;
   padding: 1rem;
-}
 
-.auth-layout__box {
-  width: 100%;
-  max-width: 400px;
+  &__box {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &__logo {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
 }
 </style>
