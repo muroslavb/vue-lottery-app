@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InputText from 'primevue/inputtext'
 import { onBeforeUnmount, ref, watch } from 'vue'
 import { SEARCH_DEBOUNCE_MS } from '@/shared/config/constants'
 
@@ -41,11 +42,11 @@ onBeforeUnmount(() => clearTimeout(timerId))
 </script>
 
 <template>
-  <input
+  <InputText
     v-model="query"
     type="search"
-    class="form-control"
     :placeholder="placeholder"
     aria-label="Search users"
+    fluid
   />
 </template>

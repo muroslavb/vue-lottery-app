@@ -1,4 +1,21 @@
-// Public API сегмента shared/ui
+// Public API сегмента shared/ui.
+// Обгортки AppXxx - єдине місце, де використовуються компоненти UI-бібліотеки (PrimeVue).
+export { default as AppButton } from './AppButton.vue'
+export { default as AppCard } from './AppCard.vue'
+export { default as AppConfirmDialog } from './AppConfirmDialog.vue'
+export { default as AppInput } from './AppInput.vue'
+export { default as AppMessage } from './AppMessage.vue'
+export { default as AppPagination } from './AppPagination.vue'
+export { default as AppSelect } from './AppSelect.vue'
+export { default as AppSpinner } from './AppSpinner.vue'
+export { default as AppTable } from './AppTable.vue'
+export { default as AppTag } from './AppTag.vue'
+export { default as AppToast } from './AppToast.vue'
+export { default as SearchBar } from './SearchBar.vue'
+export { useNotify } from './useNotify'
+export type { AppTableColumn } from './table-types'
+
+// старі обгортки над Bootstrap (замінюються в наступному коміті)
 export { default as BaseAlert } from './BaseAlert.vue'
 export { default as BaseButton } from './BaseButton.vue'
 export { default as BaseInput } from './BaseInput.vue'
@@ -6,4 +23,3 @@ export { default as BaseModal } from './BaseModal.vue'
 export { default as BasePagination } from './BasePagination.vue'
 export { default as BaseSelect } from './BaseSelect.vue'
 export { default as BaseSpinner } from './BaseSpinner.vue'
-export { default as SearchBar } from './SearchBar.vue'
