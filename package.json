@@ -12,6 +12,7 @@
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:fsd": "eslint -c eslint.fsd.config.js \"src/**/*.{ts,vue}\"",
     "format": "prettier --write \"src/**/*.{ts,vue,scss}\"",
     "format:check": "prettier --check \"src/**/*.{ts,vue,scss}\"",
     "postbuild": "node scripts/spa-fallback.mjs",
