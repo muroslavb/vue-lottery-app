@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { PAGE_SIZE } from '@/shared/config/constants'
-import { ServiceProvider } from '@/shared/api/service-provider'
+import { PAGE_SIZE } from '@/shared/config'
+import { ServiceProvider } from '@/shared/api'
 import type { UserService } from '../api/user.service'
 import type { CreateUserDto, UpdateUserDto, User } from './types'
-import { getErrorMessage } from '@/shared/lib/errors'
+import { getErrorMessage } from '@/shared/lib'
 import { matchesQuery } from '../lib/users'
 
 /**

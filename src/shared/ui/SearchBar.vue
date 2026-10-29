@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext'
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { SEARCH_DEBOUNCE_MS } from '@/shared/config/constants'
+import { SEARCH_DEBOUNCE_MS } from '@/shared/config'
 
 const props = withDefaults(
   defineProps<{

@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
-import { useSessionStore } from '@/entities/session/model/session.store'
-import { registerAuthBridge } from '@/shared/api/http-client'
+import { useSessionStore } from '@/entities/session'
+import { registerAuthBridge } from '@/shared/api'
 
 /**
  * З'єднує HTTP-клієнт (shared) зі store сесії (entities): interceptor 401 бере токен,

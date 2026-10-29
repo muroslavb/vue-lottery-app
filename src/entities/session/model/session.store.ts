@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
-import { HttpError } from '@/shared/api/http-client'
-import { ServiceProvider } from '@/shared/api/service-provider'
+import { HttpError, ServiceProvider } from '@/shared/api'
 import type { AuthService } from '../api/auth.service'
 import type { AuthSession, AuthTokens, AuthUser, LoginCredentials } from './types'
 import { clearSession as removeStoredSession, loadSession, saveSession } from '../lib/auth-storage'
-import { getErrorMessage } from '@/shared/lib/errors'
+import { getErrorMessage } from '@/shared/lib'
 
 /**
  * Store сесії (setup store): токени, поточний користувач, ознака авторизації.

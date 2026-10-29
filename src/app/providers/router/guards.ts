@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
-import { APP_TITLE } from '@/shared/config/constants'
-import { useSessionStore } from '@/entities/session/model/session.store'
+import { APP_TITLE } from '@/shared/config'
+import { useSessionStore } from '@/entities/session'
 
 export function setupGuards(router: Router): void {
   // navigation guard: захист сторінок через meta.requiresAuth / meta.guestOnly

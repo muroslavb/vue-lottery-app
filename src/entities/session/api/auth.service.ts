@@ -1,5 +1,5 @@
-import { http } from '@/shared/api/http-client'
-import { ACCESS_TOKEN_TTL_MINUTES } from '@/shared/config/constants'
+import { http } from '@/shared/api'
+import { ACCESS_TOKEN_TTL_MINUTES } from '@/shared/config'
 import type { AuthTokens, AuthUser, LoginCredentials, LoginResponse } from '../model/types'
 import type { AuthRepository } from './auth.repository'
 

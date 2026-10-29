@@ -7,7 +7,7 @@ import { setupUi } from '@/app/providers/ui'
 import router from '@/app/providers/router/index'
 import { registerServices } from '@/app/providers/services'
 import { setupTheme } from '@/app/providers/theme'
-import { useSessionStore } from '@/entities/session/model/session.store'
+import { useSessionStore } from '@/entities/session'
 
 registerServices()
 

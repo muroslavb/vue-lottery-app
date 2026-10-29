@@ -1,4 +1,4 @@
-import { AUTH_STORAGE_KEY } from '@/shared/config/constants'
+import { AUTH_STORAGE_KEY } from '@/shared/config'
 import type { AuthSession } from '../model/types'
 
 function isSession(value: unknown): value is AuthSession {
