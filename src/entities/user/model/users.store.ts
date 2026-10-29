@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { PAGE_SIZE } from '@/shared/config/constants'
 import { ServiceProvider } from '@/shared/api/service-provider'
+import type { UserService } from '../api/user.service'
 import type { CreateUserDto, UpdateUserDto, User } from './types'
 import { getErrorMessage } from '@/shared/lib/errors'
 import { matchesQuery } from '../lib/users'
@@ -12,6 +13,8 @@ import { matchesQuery } from '../lib/users'
  * і накладаємо поверх відповідей сервера - так список завжди актуальний без перезавантаження.
  */
 export const useUsersStore = defineStore('users', () => {
+  const service = () => ServiceProvider.get<UserService>('users')
+
   const users = ref<User[]>([])
   const total = ref(0)
   const currentUser = ref<User | null>(null)
@@ -41,7 +44,7 @@ export const useUsersStore = defineStore('users', () => {
     isLoading.value = true
     error.value = null
     try {
-      const result = await ServiceProvider.users.getPage({
+      const result = await service().getPage({
         limit: PAGE_SIZE,
         skip: (page - 1) * PAGE_SIZE,
         q: query,
@@ -82,7 +85,7 @@ export const useUsersStore = defineStore('users', () => {
       if (local) {
         user = local
       } else {
-        user = updatedUsers.value[id] ?? (await ServiceProvider.users.getById(id))
+        user = updatedUsers.value[id] ?? (await service().getById(id))
       }
       if (requestId === lastUserRequest) {
         currentUser.value = user
@@ -99,7 +102,7 @@ export const useUsersStore = defineStore('users', () => {
   }
 
   async function createUser(data: CreateUserDto): Promise<User> {
-    const created = await ServiceProvider.users.create(data)
+    const created = await service().create(data)
     // DummyJSON щоразу повертає той самий id (наступний після останнього) - робимо його унікальним
     const takenIds = new Set(createdUsers.value.map((user) => user.id))
     let id = created.id
@@ -126,7 +129,7 @@ export const useUsersStore = defineStore('users', () => {
       updated = { ...createdUsers.value[localIndex], ...data }
       createdUsers.value[localIndex] = updated
     } else {
-      const response = await ServiceProvider.users.update(id, data)
+      const response = await service().update(id, data)
       updated = { ...previous, ...data, ...response, id } as User
       updatedUsers.value[id] = updated
     }
@@ -145,7 +148,7 @@ export const useUsersStore = defineStore('users', () => {
     if (isLocalUser(id)) {
       createdUsers.value = createdUsers.value.filter((user) => user.id !== id)
     } else {
-      await ServiceProvider.users.delete(id)
+      await service().delete(id)
       deletedIds.value.push(id)
       delete updatedUsers.value[id]
     }

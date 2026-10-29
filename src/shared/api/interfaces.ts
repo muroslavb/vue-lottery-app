@@ -1,6 +1,3 @@
-import type { AuthTokens, LoginCredentials, LoginResponse } from '@/entities/session/model/types'
-import type { User } from '@/entities/user/model/types'
-
 export interface PageParams {
   limit?: number
   skip?: number
@@ -33,10 +30,4 @@ export interface Editable<T, TUpdate> {
 
 export interface Deletable {
   delete(id: number): Promise<void>
-}
-
-export interface AuthRepository {
-  login(credentials: LoginCredentials): Promise<LoginResponse>
-  getCurrentUser(): Promise<User>
-  refresh(refreshToken: string): Promise<AuthTokens>
 }

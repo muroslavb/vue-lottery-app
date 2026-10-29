@@ -2,11 +2,14 @@ import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { HttpError } from '@/shared/api/http-client'
 import { ServiceProvider } from '@/shared/api/service-provider'
+import type { AuthService } from '../api/auth.service'
 import type { AuthUser, LoginCredentials } from './types'
 import { clearSession, loadSession, saveSession } from '../lib/auth-storage'
 import { getErrorMessage } from '@/shared/lib/errors'
 
 export const useAuthStore = defineStore('auth', () => {
+  const service = () => ServiceProvider.get<AuthService>('auth')
+
   // відновлення сесії з localStorage при завантаженні застосунку
   const saved = loadSession()
   const user = ref<AuthUser | null>(saved?.user ?? null)
@@ -44,7 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
         accessToken: access,
         refreshToken: refresh,
         ...profile
-      } = await ServiceProvider.auth.login(credentials)
+      } = await service().login(credentials)
       user.value = profile
       accessToken.value = access
       refreshToken.value = refresh
@@ -70,7 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
       return false
     }
     try {
-      const tokens = await ServiceProvider.auth.refresh(refreshToken.value)
+      const tokens = await service().refresh(refreshToken.value)
       accessToken.value = tokens.accessToken
       refreshToken.value = tokens.refreshToken
       return true
@@ -82,7 +85,7 @@ export const useAuthStore = defineStore('auth', () => {
   /** Перевіряє збережену сесію запитом GET /auth/me (з автоматичним оновленням токена). */
   async function restoreSession(): Promise<void> {
     try {
-      const current = await ServiceProvider.auth.getCurrentUser()
+      const current = await service().getCurrentUser()
       user.value = {
         id: current.id,
         username: current.username,

@@ -6,5 +6,6 @@ export type {
   LoginCredentials,
   LoginResponse,
 } from './model/types'
+export type { AuthRepository } from './api/auth.repository'
 export { AuthService } from './api/auth.service'
 export { useAuthStore } from './model/auth.store'

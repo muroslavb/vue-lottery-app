@@ -2,7 +2,6 @@
 export { HttpError, http, registerAuthBridge } from './http-client'
 export type { AuthBridge, HttpOptions } from './http-client'
 export type {
-  AuthRepository,
   Creatable,
   Deletable,
   Editable,

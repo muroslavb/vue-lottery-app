@@ -1,8 +1,7 @@
 import { http } from '@/shared/api/http-client'
 import { ACCESS_TOKEN_TTL_MINUTES } from '@/shared/config/constants'
-import type { AuthTokens, LoginCredentials, LoginResponse } from '../model/types'
-import type { User } from '@/entities/user/model/types'
-import type { AuthRepository } from '@/shared/api/interfaces'
+import type { AuthTokens, AuthUser, LoginCredentials, LoginResponse } from '../model/types'
+import type { AuthRepository } from './auth.repository'
 
 export class AuthService implements AuthRepository {
   login(credentials: LoginCredentials): Promise<LoginResponse> {
@@ -13,8 +12,8 @@ export class AuthService implements AuthRepository {
   }
 
   /** Захищений endpoint: потрібен заголовок Authorization: Bearer <accessToken>. */
-  getCurrentUser(): Promise<User> {
-    return http<User>('/auth/me', { auth: true })
+  getCurrentUser(): Promise<AuthUser> {
+    return http<AuthUser>('/auth/me', { auth: true })
   }
 
   refresh(refreshToken: string): Promise<AuthTokens> {
