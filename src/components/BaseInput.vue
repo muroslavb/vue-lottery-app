@@ -4,21 +4,12 @@ withDefaults(
     modelValue: string | undefined
     id: string
     label: string
-    type?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date'
+    type?: 'text' | 'email' | 'tel' | 'password' | 'number'
     placeholder?: string
     autocomplete?: string
     error?: string
-    max?: string
-    isValid?: boolean
   }>(),
-  {
-    type: 'text',
-    placeholder: '',
-    autocomplete: undefined,
-    error: '',
-    max: undefined,
-    isValid: false,
-  },
+  { type: 'text', placeholder: '', autocomplete: undefined, error: '' },
 )
 
 const emit = defineEmits<{
@@ -40,9 +31,8 @@ function onInput(event: Event): void {
       :type="type"
       :placeholder="placeholder"
       :autocomplete="autocomplete"
-      :max="max"
       class="form-control"
-      :class="{ 'is-invalid': error, 'is-valid': isValid }"
+      :class="{ 'is-invalid': error }"
       @input="onInput"
       @blur="emit('blur')"
     />
